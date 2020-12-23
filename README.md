@@ -1,19 +1,23 @@
 # Unicode and Java
 
+*Unicode provides a unique number for every character, no matter what the platform, no matter what the program, no
+matter what the language.*
+
 ## Terminology
 
 - A *character* is just an abstract minimal unit of text. It doesn't have a fixed shape (that would be a glyph), and it
   doesn't have a value. "A" is a character, and so is "€", the symbol for the common currency of Germany, France, and
-  numerous other European countries.
+  numerous other European countries. Every abstract character has an associated name, e.g. LATIN SMALL LETTER A.
 - A *character set* is a collection of characters. For example, the Han characters are the characters originally
   invented by the Chinese, which have been used to write Chinese, Japanese, Korean, and Vietnamese.
 - A *coded character set* is a character set where each character has been assigned a unique number. At the core of the
   Unicode standard is a coded character set that assigns the letter "A" the number 0x0041 and the letter "€" the number
   0x20AC. The Unicode standard always uses hexadecimal numbers, and writes them with the prefix "U+", so the number
   for "A" is written as "U+0041".
-- *Code points* are the numbers that can be used in a coded character set. A coded character set defines a range of
-  valid code points, but doesn't necessarily assign characters to all those code points. The valid code points for
-  Unicode are U+0000 to U+10FFFF. Unicode 13.0 assigns characters to 143,859 of these more than a million code points.
+- *Code point* is a number assigned to a single character. Basically, they are the numbers that can be used in a coded
+  character set. A coded character set defines a range of valid code points, but doesn't necessarily assign characters
+  to all those code points. The valid code points for Unicode are U+0000 to U+10FFFF. Unicode 13.0 assigns characters to
+  143,859 of these more than a million code points.
 - *Supplementary characters* are characters with code points in the range U+10000 to U+10FFFF, that is, those characters
   that could not be represented in the original 16-bit design of Unicode. The set of characters from U+0000 to U+FFFF is
   sometimes referred to as the Basic Multilingual Plane (BMP). Thus, each Unicode character is either in the BMP or a
@@ -84,8 +88,20 @@ Let W2 be the (eventual) next integer following W1.
 
 ## Overall Summary
 
-- The UTF-16 encoding represents all Unicode code points in a variable-length code thereby saving space.
-- **Code points** are numbers that represent Unicode characters. One or more code units encode a single code point.
+- The UTF-16 encoding represents all Unicode code points in a variable-length code thereby saving space, though not as
+  much as UTF-8 encoding. With UTF-8, if a character can be represented with 1 byte that’s all it will use. If a
+  character needs 4 bytes it’ll get 4 bytes. UTF-16 must encode these same characters in either two or four bytes.
+- **Code points** are numbers that represent Unicode characters. A code point is the atomic unit (irreducible unit) of
+  information. Text is a sequence of code points. Each code point is a number which is given meaning by the Unicode
+  standard. To access code points we use the following syntax:
+
+```
+U+ (hexadecimal number of code point)
+```
+
+The hexadecimal numbering system is used as it’s a shorter way to reference large numbers. That’s why you’ll see things
+like `U+1F4A9` or `\u1F4A9` in emoji tables.
+
 - **Code units** are numbers that encode code points, to store or transmit Unicode text. As stated above, one or more
   code units encode a single code point. Each code unit has the same size, which depends on the encoding format that is
   used. For example, UTF-16, has 16-bit code units.
@@ -110,6 +126,17 @@ Let W2 be the (eventual) next integer following W1.
     + Plane 15–16: Supplementary Private Use Area (S PUA A/B), 0x0F0000–0x10FFFF
         - Available for character assignment by parties outside the ISO and the Unicode Consortium. Not standardized.
           Planes 1-16 are called supplementary planes or **astral planes.**
+- The code points that are part of the astral planes are named astral code points. These code points are in the range
+  from U+10000 to U+10FFFF. An astral code point can have 5 or 6 digits in hexadecimal: U+ddddd or U+dddddd. Let’s see
+  some characters from astral planes:
+
+```
+𝄞 is U+1D11E named MUSICAL SYMBOL G CLEF
+𝐁 is U+1D401 named MATHEMATICAL BOLD CAPITAL B
+🀵 is U+1F035 named DOMINO TITLE HORIZONTAL-00-04
+😀 is U+1F600 named GRINNING FACE
+```
+
 - Characters whose code points are greater than U+FFFF are called *Supplementary characters*. Those code points are
   called *Supplementary Code Points*. The supplementary characters are encoded as consecutive pairs of code units. Each
   of the values in such an encoding pair falls into a range of 2048 unused values of the basic multilingual plane,
@@ -185,6 +212,7 @@ the Unicode Glossary
 ## References
 
 - [Supplementary Characters in the Java Platform](https://www.oracle.com/technical-resources/articles/javase/supplementary.html)
+- [What every JavaScript developer should know about Unicode](https://dmitripavlutin.com/what-every-javascript-developer-should-know-about-unicode/)
 - [Unicode – a brief introduction (advanced)](https://exploringjs.com/impatient-js/ch_unicode.html#:~:text=Code%20points%20are%20numbers%20that,encoding%20format%20that%20is%20used.)
 - [What is UTF-8 Encoding? A Guide for Non-Programmers](https://blog.hubspot.com/website/what-is-utf-8)
 - [How Unicode Works: What every developer needs to know about strings and 🦄](https://deliciousbrains.com/how-unicode-works/)
