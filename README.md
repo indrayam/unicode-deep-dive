@@ -28,13 +28,44 @@ The Character class wraps a value of the primitive type `char` in an object. An 
 In addition, this class provides a large number of static methods for determining a character's category (lowercase letter, digit, etc.) and for converting characters from uppercase to lowercase and vice versa.
 
 ### Unicode Conformance
-The fields and methods of class Character are defined in terms of character information from the Unicode Standard, specifically the UnicodeData file that is part of the Unicode Character Database. This file specifies properties including name and category for every assigned Unicode code point or character range. The file is available from the Unicode Consortium at http://www.unicode.org .
-The Java SE 11 Platform uses character information from version 10.0 of the Unicode Standard, with an extension. The Java SE 11 Platform allows an implementation of class Character to use the Japanese Era code point, U+32FF, from the first version of the Unicode Standard after 10.0 that assigns the code point. Consequently, the behavior of fields and methods of class Character may vary across implementations of the Java SE 11 Platform when processing the aforementioned code point ( outside of version 10.0 ), except for the following methods that define Java identifiers: isJavaIdentifierStart(int), isJavaIdentifierStart(char), isJavaIdentifierPart(int), and isJavaIdentifierPart(char). Code points in Java identifiers must be drawn from version 10.0 of the Unicode Standard.
+The fields and methods of class Character are defined in terms of character information from the Unicode Standard,
+specifically the UnicodeData file that is part of the Unicode Character Database. This file specifies properties
+including name and category for every assigned Unicode code point or character range. The file is available from the
+Unicode Consortium at http://www.unicode.org . The Java SE 11 Platform uses character information from version 10.0 of
+the Unicode Standard, with an extension. The Java SE 11 Platform allows an implementation of class Character to use the
+Japanese Era code point, U+32FF, from the first version of the Unicode Standard after 10.0 that assigns the code point.
+Consequently, the behavior of fields and methods of class Character may vary across implementations of the Java SE 11
+Platform when processing the aforementioned code point ( outside of version 10.0 ), except for the following methods
+that define Java identifiers: isJavaIdentifierStart(int), isJavaIdentifierStart(char), isJavaIdentifierPart(int), and
+isJavaIdentifierPart(char). Code points in Java identifiers must be drawn from version 10.0 of the Unicode Standard.
 
 ### Unicode Character Representations
-The `char` data type (and therefore the value that a Character object encapsulates) are based on the original Unicode specification, which defined characters as fixed-width 16-bit entities. The Unicode Standard has since been changed to allow for characters whose representation requires more than 16 bits. The range of legal code points is now U+0000 to U+10FFFF, known as Unicode scalar value. (Refer to the definition of the U+n notation in the Unicode Standard.)
-The set of characters from U+0000 to U+FFFF is sometimes referred to as the **Basic Multilingual Plane (BMP)**. Characters whose code points are greater than U+FFFF are called *supplementary characters*. The Java platform uses the UTF-16 representation in char arrays and in the String and StringBuffer classes. In this representation, supplementary characters are represented as a pair of char values, the first from the high-surrogates range, (\uD800-\uDBFF), the second from the low-surrogates range (\uDC00-\uDFFF).
-A char value, therefore, represents Basic Multilingual Plane (BMP) code points, including the surrogate code points, or code units of the UTF-16 encoding. An int value represents all Unicode code points, including supplementary code points. The lower (least significant) 21 bits of int are used to represent Unicode code points and the upper (most significant) 11 bits must be zero. Unless otherwise specified, the behavior with respect to supplementary characters and surrogate char values is as follows:
-The methods that only accept a char value cannot support supplementary characters. They treat char values from the surrogate ranges as undefined characters. For example, Character.isLetter('\uD840') returns false, even though this specific value if followed by any low-surrogate value in a string would represent a letter.
-The methods that accept an int value support all Unicode characters, including supplementary characters. For example, Character.isLetter(0x2F81A) returns true because the code point value represents a letter (a CJK ideograph).
-In the Java SE API documentation, Unicode code point is used for character values in the range between U+0000 and U+10FFFF, and Unicode code unit is used for 16-bit char values that are code units of the UTF-16 encoding. For more information on Unicode terminology, refer to the Unicode Glossary
+
+The `char` data type (and therefore the value that a Character object encapsulates) are based on the original Unicode
+specification, which defined characters as fixed-width 16-bit entities. The Unicode Standard has since been changed to
+allow for characters whose representation requires more than 16 bits. The range of legal code points is now U+0000 to
+U+10FFFF, known as Unicode scalar value. (Refer to the definition of the U+n notation in the Unicode Standard.)
+The set of characters from U+0000 to U+FFFF is sometimes referred to as the **Basic Multilingual Plane (BMP)**.
+Characters whose code points are greater than U+FFFF are called *supplementary characters*. The Java platform uses the
+UTF-16 representation in char arrays and in the String and StringBuffer classes. In this representation, supplementary
+characters are represented as a pair of char values, the first from the high-surrogates range, (\uD800-\uDBFF), the
+second from the low-surrogates range (\uDC00-\uDFFF). A char value, therefore, represents Basic Multilingual Plane (BMP)
+code points, including the surrogate code points, or code units of the UTF-16 encoding. An int value represents all
+Unicode code points, including supplementary code points. The lower (least significant) 21 bits of int are used to
+represent Unicode code points and the upper (most significant) 11 bits must be zero. Unless otherwise specified, the
+behavior with respect to supplementary characters and surrogate char values is as follows:
+The methods that only accept a char value cannot support supplementary characters. They treat char values from the
+surrogate ranges as undefined characters. For example, Character.isLetter('\uD840') returns false, even though this
+specific value if followed by any low-surrogate value in a string would represent a letter. The methods that accept an
+int value support all Unicode characters, including supplementary characters. For example, Character.isLetter(0x2F81A)
+returns true because the code point value represents a letter (a CJK ideograph). In the Java SE API documentation,
+Unicode code point is used for character values in the range between U+0000 and U+10FFFF, and Unicode code unit is used
+for 16-bit char values that are code units of the UTF-16 encoding. For more information on Unicode terminology, refer to
+the Unicode Glossary
+
+## References
+
+- [Unicode – a brief introduction (advanced)](https://exploringjs.com/impatient-js/ch_unicode.html#:~:text=Code%20points%20are%20numbers%20that,encoding%20format%20that%20is%20used.)
+- [What is UTF-8 Encoding? A Guide for Non-Programmers](https://blog.hubspot.com/website/what-is-utf-8)
+- [How Unicode Works: What every developer needs to know about strings and 🦄](https://deliciousbrains.com/how-unicode-works/)
+- [https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/)
