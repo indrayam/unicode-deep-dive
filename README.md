@@ -42,8 +42,14 @@
 
 ## Encoding UTF-16
 
-Encoding of a single character from an ISO 10646 character value to UTF-16 proceeds as follows. Let U be the character
-number, no greater than 0x10FFFF.
+The Unicode Standard and ISO 10646 jointly define a coded character set (CCS) which encompasses most of the world's
+writing systems. In ISO 10646, each character is assigned a number, which Unicode calls the *Unicode scalar value*. This
+number is the same as the UCS-4 (Universal Character Set) value of the character. Simply put, it is what "Character
+value" means in the rest of this explanation.
+
+Encoding of a single character from an ISO 10646 character value to UTF-16 proceeds as follows.
+
+Let U be the character number, no greater than 0x10FFFF.
 
 - If U < 0x10000, encode U as a 16-bit unsigned integer and terminate.
 - Let U' = U - 0x10000. Because U is less than or equal to 0x10FFFF, U' must be less than or equal to 0xFFFFF. That is,
@@ -64,8 +70,9 @@ W2 = 110111xxxxxxxxxx
 ## Decoding UTF-16
 
 Decoding of a single character from UTF-16 to an ISO 10646 character value proceeds as follows. Let W1 be the next
-16-bit integer in the sequence of integers representing the text. Let W2 be the (eventual)
-next integer following W1.
+16-bit integer in the sequence of integers representing the text.
+
+Let W2 be the (eventual) next integer following W1.
 
 - If W1 < 0xD800 or W1 > 0xDFFF, the character value U is the value of W1. Terminate.
 - Determine if W1 is between 0xD800 and 0xDBFF. If not, the sequence is in error and no valid character can be obtained
