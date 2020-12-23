@@ -1,12 +1,12 @@
 # Unicode and Java
 
 ## Summary
-- UTF-8 saves space. It can use anywhere from 1 byte to 4 bytes
+- The UTF-16 encoding represents all Unicode code points in a variable-length code thereby saving space.
 - **Code points** are numbers that represent Unicode characters. One or more code units encode a single code point.
 - **Code units** are numbers that encode code points, to store or transmit Unicode text. As stated above, one or more
   code units encode a single code point. Each code unit has the same size, which depends on the encoding format that is
-  used. The most popular format, UTF-8, has 8-bit code units.
-- The first version of Unicode had 16-bit code points. Translation: Each UTF encoded character used two Code Units. The
+  used. For example, UTF-16, has 16-bit code units.
+- The first version of Unicode had 16-bit code points. Translation: Each UTF encoded character used one code unit. The
   use of 16 bits allowed direct representation of 65,536 unique characters, but this is not nearly enough to cover all
   the symbols used in human languages. Unicode version 4.1 includes over 97,000 characters, with over 70,000 characters
   for Chinese alone. The Unicode standard has established 16 additional "planes" of characters, each the same size as
@@ -28,11 +28,14 @@
         - Available for character assignment by parties outside the ISO and the Unicode Consortium. Not standardized.
           Planes 1-16 are called supplementary planes or **astral planes.**
 - Characters whose code points are greater than U+FFFF are called *Supplementary characters*. Those code points are
-  called *Supplementary Code Points*. In other words, a *Supplementary Character* is a character located beyond the **
-  BMP**, and a "surrogate" is a UTF-16 code value. For UTF-16, a "surrogate pair" is required to represent a single
-  supplementary character. The first **(high) surrogate** is a 16-bit code value in the range U+D800 to U+DBFF. The
-  second **(low) surrogate** is a 16-bit code value in the range U+DC00 to U+DFFF. Using the surrogate mechanism, UTF-16
-  can support all 1,114,112 potential Unicode characters.
+  called *Supplementary Code Points*. The supplementary characters are encoded as consecutive pairs of code units. Each
+  of the values in such an encoding pair falls into a range of 2048 unused values of the basic multilingual plane,
+  called the **surrogates area** (see below). *This is rather clever, because you can immediately tell whether a code
+  unit encodes a single character or it is the first or second part of a supplementary character.*
+- For UTF-16, a "surrogate pair" is required to represent a single supplementary character. The first **(high)
+  surrogate** is a 16-bit code value in the range U+D800 to U+DBFF. The second **(low) surrogate** is a 16-bit code
+  value in the range U+DC00 to U+DFFF. Using the surrogate mechanism, UTF-16 can support all 1,114,112 potential Unicode
+  characters.
 - The Java platform uses the UTF-16 representation in char arrays and in the String and StringBuffer classes:
 
 ```
