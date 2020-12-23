@@ -218,3 +218,4 @@ the Unicode Glossary
 - [How Unicode Works: What every developer needs to know about strings and 🦄](https://deliciousbrains.com/how-unicode-works/)
 - [https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/)
 - [RFC: Encoding UTF-16](https://tools.ietf.org/html/rfc2781#section-2.1)
+- [Java-Supplementary Characters and UTF-16 Encoding (Actual Algorithm Explained)](https://hajsoftutorial.com/java-supplementary-characters-utf-16-encoding/)
